@@ -1,55 +1,63 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MyApp());
+}
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  String tittle = 'My Favorite Fruit ';
-  String fruit = 'Unknown';
-
-  callback(varFruit) {
-    setState(() {
-      fruit = varFruit;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text(tittle + fruit),
-        ),
-        body: Center(
-          child: Column(
-            children: [
-              Fruit("Orange",callback),
-              Fruit("Apple",callback),
-              Fruit("Banana",callback),
-            ],
-          ),
+      home: FirstScreen(),
+    );
+  }
+}
+
+class FirstScreen extends StatelessWidget {
+  const FirstScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("First Screen")),
+      body: Center(
+        child: ElevatedButton(
+          child: Text("Press Me"),
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => SecondScreen()));
+          },
         ),
       ),
     );
   }
 }
 
-class Fruit extends StatelessWidget {
-  final String name;
-  final Function callback;
-
-  Fruit(this.name,this.callback);
+class SecondScreen extends StatelessWidget {
+  const SecondScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-        onPressed:(){
-          callback(name);
-        },
-        child: Text(name));
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Text("Second Screen"),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          child: Text("Press Me"),
+          onPressed: () {
+            //Navigator.push(context, MaterialPageRoute(builder: (context) => FirstScreen()));
+            Navigator.pop(context);
+          },
+        ),
+      ),
+    );
   }
 }
